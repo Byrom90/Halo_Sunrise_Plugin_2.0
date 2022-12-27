@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\kernel">
+      <UniqueIdentifier>{5f100432-80b7-4133-bd6d-3aafbae1bb52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\xam">
+      <UniqueIdentifier>{1a442b04-bfa8-4c0f-a7f1-dc9b543dd136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel">
+      <UniqueIdentifier>{379d1637-df45-454f-b481-89cbf67ddb8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\xam">
+      <UniqueIdentifier>{55a5f09b-8adc-4d3b-a582-f09de6545c7a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="kernel\_kernelext.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keFileInfo.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\kePrivateStructs.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keXeCrypt.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keXeKeys.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keXexInfo.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="xam\_xamext.h">
+      <Filter>Header Files\xam</Filter>
+    </ClInclude>
+    <ClInclude Include="xam\xamTask.h">
+      <Filter>Header Files\xam</Filter>
+    </ClInclude>
+    <ClInclude Include="xam\xamXContent.h">
+      <Filter>Header Files\xam</Filter>
+    </ClInclude>
+    <ClInclude Include="xkelib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keSmc.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="exttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\console_type.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="xam\xamNet.h">
+      <Filter>Header Files\xam</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keDriver.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="xapiext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="syssock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keNand.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\keXConfig.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\kernelExpEnum.h">
+      <Filter>Header Files\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="xam\xamExpEnum.h">
+      <Filter>Header Files\xam</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="kernel\kernelext20871.0.def">
+      <Filter>Source Files\kernel</Filter>
+    </None>
+    <None Include="kernel\kernelext21119.0.def">
+      <Filter>Source Files\kernel</Filter>
+    </None>
+    <None Include="xam\xamext20871.0.def">
+      <Filter>Source Files\xam</Filter>
+    </None>
+    <None Include="xam\xamext21119.0.def">
+      <Filter>Source Files\xam</Filter>
+    </None>
+    <None Include="kernel\kernelext21173.0.def">
+      <Filter>Source Files\kernel</Filter>
+    </None>
+    <None Include="xam\xamext21173.0.def">
+      <Filter>Source Files\xam</Filter>
+    </None>
+    <None Include="kernel\kernelext21250.0.def">
+      <Filter>Source Files\kernel</Filter>
+    </None>
+    <None Include="xam\xamext21250.0.def">
+      <Filter>Source Files\xam</Filter>
+    </None>
+  </ItemGroup>
+</Project>

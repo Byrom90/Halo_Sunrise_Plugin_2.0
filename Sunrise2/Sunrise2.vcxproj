@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="CodeAnalysis|Xbox 360">
+      <Configuration>CodeAnalysis</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Xbox 360">
+      <Configuration>Debug</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="NO_OPTIM|Xbox 360">
+      <Configuration>NO_OPTIM</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Obfused|Xbox 360">
+      <Configuration>Obfused</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile_FastCap|Xbox 360">
+      <Configuration>Profile_FastCap</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Xbox 360">
+      <Configuration>Profile</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Rel-Obf|Xbox 360">
+      <Configuration>Rel-Obf</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release_LTCG|Xbox 360">
+      <Configuration>Release_LTCG</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Xbox 360">
+      <Configuration>Release</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Sunrise2</ProjectName>
+    <ProjectGuid>{652C7D60-BC02-4E09-96DD-930012345679}</ProjectGuid>
+    <RootNamespace>Sunrise2</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+    <PlatformToolset>2010-01</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfAtl>false</UseOfAtl>
+    <PlatformToolset>2010-01</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">Debug\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">true</LinkIncremental>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">CodeAnalysis\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">CodeAnalysis\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">true</LinkIncremental>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">Profile\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">Profile\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">Profile_FastCap\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">Profile_FastCap\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">Release\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">Release_LTCG\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">Rel-Obf\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">Release_LTCG\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">Obfused\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">Release_LTCG\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">Rel-Obf\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">Release_LTCG\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">Obfused\</IntDir>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <OutputFile Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">$(OutDir)$(ProjectName).dll</OutputFile>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <RemoteRoot Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">xe:\Samples\DynamicLinkLibrary</RemoteRoot>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">
+    <IncludePath>$(Xbox360TechPreviewInclude);$(XDKInstallDir)\include\xbox;..\xkelib;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">
+    <IncludePath>$(Xbox360TechPreviewInclude);$(XDKInstallDir)\include\xbox;..\xkelib;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">
+    <IncludePath>$(Xbox360TechPreviewInclude);$(XDKInstallDir)\include\xbox;..\xkelib;</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\xkelib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <CallAttributedProfiling>Disabled</CallAttributedProfiling>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\xkelib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>xex.xml</ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+      <BaseAddress>
+      </BaseAddress>
+      <RequireFullExperience>false</RequireFullExperience>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CodeAnalysis|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\Common;Common;..\..\..\Modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP /analyze:stacksize32768  %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_DEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <CallAttributedProfiling>Disabled</CallAttributedProfiling>
+      <PREfast>AnalyzeOnly</PREfast>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>
+      </ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\Common;Common;..\..\..\Modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;PROFILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <CallAttributedProfiling>Disabled</CallAttributedProfiling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9i.lib;d3dx9i.lib;xgraphics.lib;xapilibi.lib;xaudio2.lib;x3daudioi.lib;xmcorei.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>xapilib.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>
+      </ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile_FastCap|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\Common;Common;..\..\..\Modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;PROFILE;FASTCAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <CallAttributedProfiling>Fastcap</CallAttributedProfiling>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9i.lib;d3dx9i.lib;xgraphics.lib;xapilibi.lib;xaudio2.lib;x3daudioi.lib;xmcorei.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>
+      </ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\Common;Common;..\..\..\Modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudio.lib;xmcore.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>
+      </ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\xkelib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\xkelib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>realEntryPoint</EntryPointSymbol>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>xex.xml</ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\xkelib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\xkelib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>realEntryPoint</EntryPointSymbol>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>"$(ProjectDir)xextool.exe" -e u -c b -o "$(ImageXexOutput)"_base "$(ImageXexOutput)"
+"$(ProjectDir)XexSectionDump.exe" "$(ImageXexOutput)"_base "$(OutDir)xbls_txt.bin"
+"$(ProjectDir)xextool.exe" -m r -e u -c u "$(ImageXexOutput)"</Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>xex.xml</ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\xkelib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\xkelib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>xex.xml</ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>FALSE</OpenMPSupport>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <ExceptionHandling>false</ExceptionHandling>
+      <AdditionalIncludeDirectories>..\xkelib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;XBOX;XBOX_SAMPLE;_XBOX_CRT_DEPRECATE_INSECURE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AssemblerOutput>NoListing</AssemblerOutput>
+      <AnalyzeStalls>false</AnalyzeStalls>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <SetChecksum>true</SetChecksum>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>..\xkelib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>SecureDllMain</EntryPointSymbol>
+    </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+    <ImageXex>
+      <ConfigurationFile>xex.xml</ConfigurationFile>
+      <AdditionalSections>
+      </AdditionalSections>
+    </ImageXex>
+    <Deploy>
+      <DeploymentType>EmulateDvd</DeploymentType>
+      <DvdEmulationType>ZeroSeekTimes</DvdEmulationType>
+      <DeploymentFiles>$(RemoteRoot)=$(ImagePath);</DeploymentFiles>
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </Deploy>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="xex.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Sunrise2.cpp">
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">AnySuitable</InlineFunctionExpansion>
+      <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">true</IntrinsicFunctions>
+      <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">true</IntrinsicFunctions>
+    </ClCompile>
+    <ClCompile Include="CoreHooks.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Rel-Obf|Xbox 360'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='NO_OPTIM|Xbox 360'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Obfused|Xbox 360'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Utilities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Sunrise2.h" />
+    <ClInclude Include="CoreHooks.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utilities.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

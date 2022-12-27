@@ -1,0 +1,5 @@
+  Symbol name  : KiApcNormalRoutineNop
+  Symbol name  : _vscprintf
+  Symbol name  : vsprintf
+  Symbol name  : sprintf
+  Symbol name  : _vscwprintf

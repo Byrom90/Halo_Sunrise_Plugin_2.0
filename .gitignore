@@ -21,6 +21,10 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Rr]elease_LTCG/
+[Rr]elease20871.0/
+[Rr]elease21173.0/
+[Rr]elease21250.0/
 x64/
 x86/
 [Aa][Rr][Mm]/
