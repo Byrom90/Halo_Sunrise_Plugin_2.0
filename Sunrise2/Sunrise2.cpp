@@ -26,15 +26,18 @@ DWORD LastTitleId;
 DWORD Halo3 = 0x4D5307E6;
 DWORD Halo3Pimps = 0x4D53880C;
 DWORD HaloReach = 0x4D53085B;
+DWORD Halo3Epsilon = 0x4D53883A;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = TRUE;
 
 
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
-
+DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
 DWORD Halo3_Retail_LSP_Addr = 0x823B8EF0;
+
 DWORD Halo3_Retail_XUserReadStats_Addr = 0x825B6358;
+DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
 
 
 VOID AllowRetailPlayers_HALO3_RETAIL()
@@ -74,7 +77,7 @@ VOID Initialise()
 		{
 			LastTitleId = TitleID; // Set the last title id  to the current title id so we don't loop rechecking
 
-			if (TitleID == Halo3 || TitleID == Halo3Pimps) // Check for both regular and alpha/beta title ids
+			if (TitleID == Halo3 || TitleID == Halo3Pimps || TitleID == Halo3Epsilon) // Check for both regular and alpha/beta title ids
 			{
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				//XexPcToFileHeader((PVOID)0x82000000, &PLDR_Halo3xex);
@@ -91,6 +94,21 @@ VOID Initialise()
 
 					if (bIgnoreTrueskill)
 						SetupXUserReadStatsHook(Halo3_Retail_XUserReadStats_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				case 0x46CA8883: // Halo 3 Epsilon Aug 20th
+				{
+					printf("[Sunrise2] Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Epsilon_LSP_Addr);
+
+					if (bIgnoreTrueskill)
+						SetupXUserReadStatsHook(Halo3_Epsilon_XUserReadStats_Addr);
+
+					// Enable debug logs.
+					*((DWORD*)(0x82236154)) = 0x60000000;
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
