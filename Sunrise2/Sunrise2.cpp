@@ -12,7 +12,7 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.00;
+FLOAT SunriseVers = 2.01;
 
 CHAR ip[4] = { 174, 136, 231, 17 };
 INT port = 8000;
@@ -158,7 +158,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 		{
 			printf("[Sunrise2] Plugin load aborted! Disc tray is open\n");
 			HANDLE hSunrise = hModule;
-			bLoopHasComplete = TRUE; // Make sure we set this so we don't get stuff in a sleep loop when we unload (DLL_PROCESS_DETACH) in a sec.
+			bLoopHasComplete = TRUE; // Make sure we set this so we don't get stuck in a sleep loop when we unload (DLL_PROCESS_DETACH) in a sec.
 			*(WORD*)((DWORD)hSunrise + 64) = 1;
 			return FALSE;
 		}
@@ -178,7 +178,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 			Sleep(100);
 
 		Sleep(500);
-		printf("[Sunrise2] Unloaded!\n", SunriseVers);
+		printf("[Sunrise2] Unloaded!\n");
 		break;
 
 	}
