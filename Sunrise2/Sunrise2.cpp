@@ -29,7 +29,7 @@ DWORD HaloReach = 0x4D53085B;
 DWORD Halo3Epsilon = 0x4D53883A;
 
 BOOL bAllowRetailPlayers = TRUE;
-BOOL bIgnoreTrueskill = TRUE;
+BOOL bIgnoreTrueskill = FALSE;
 
 
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
