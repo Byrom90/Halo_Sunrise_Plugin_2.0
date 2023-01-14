@@ -31,7 +31,7 @@ DWORD Halo3Epsilon = 0x4D53883A;
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = TRUE;
 
-
+DWORD Halo3_Beta_LSP_Addr = 0x820DE740;
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
 DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
 DWORD Halo3_Retail_LSP_Addr = 0x823B8EF0;
@@ -98,7 +98,7 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
-				case 0x46CA8883: // Halo 3 Epsilon Aug 20th
+				case 0x46CA8883: // Halo 3 Epsilon Aug 20th 2007
 				{
 					printf("[Sunrise2] Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...\n");
 					SetupNetDllHooks();
@@ -109,6 +109,15 @@ VOID Initialise()
 
 					// Enable debug logs.
 					*((DWORD*)(0x82236154)) = 0x60000000;
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				case 0x4637C172: // Halo 3 Beta May 1st 2007
+				{
+					printf("[Sunrise2] Halo 3 Beta (May 1st) detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Beta_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
