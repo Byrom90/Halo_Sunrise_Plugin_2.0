@@ -68,5 +68,6 @@ DWORD __stdcall XUserReadStats_hook(DWORD, DWORD, DWORD, DWORD, DWORD, DWORD* pc
 
 VOID SetupXUserReadStatsHook(DWORD Address)
 {
+	Sunrise_Dbg("Ignoring true skill");
 	PatchInJump((DWORD*)Address, (DWORD)&XUserReadStats_hook, false);
 }
