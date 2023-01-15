@@ -23,18 +23,23 @@ BOOL bRunContinuous = TRUE;
 BOOL bLoopHasComplete = FALSE;
 BOOL bIsDevkit; // Set on plugin load. Skips doing xnotify on devkits
 DWORD LastTitleId;
+
 DWORD Halo3 = 0x4D5307E6;
-DWORD Halo3Pimps = 0x4D53880C;
+DWORD Halo3ExternalBeta = 0x4D53880C;
 DWORD HaloReach = 0x4D53085B;
-DWORD Halo3Epsilon = 0x4D53883A;
+DWORD Halo3InternalBeta = 0x4D53883A;
+DWORD Halo3ODST = 0x4D530877;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
 
-
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
+DWORD Halo3_Delta_Mar9_cache_test_LSP_Addr = 0x82343270;
+DWORD Halo3_Beta_May1_LSP_Addr = 0x820DE740;
+DWORD Halo3_Beta_May15_LSP_Addr = 0x820DE738;
 DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
-DWORD Halo3_Retail_LSP_Addr = 0x823B8EF0;
+DWORD Halo3_Retail_TU2_LSP_Addr = 0x823B8EF0;
+DWORD Halo3_ODST_LSP_Addr = 0x821D22A0;
 
 DWORD Halo3_Retail_XUserReadStats_Addr = 0x825B6358;
 DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
@@ -84,7 +89,7 @@ VOID Initialise()
 		{
 			LastTitleId = TitleID; // Set the last title id  to the current title id so we don't loop rechecking
 
-			if (TitleID == Halo3 || TitleID == Halo3Pimps || TitleID == Halo3Epsilon) // Check for both regular and alpha/beta title ids
+			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
@@ -93,11 +98,11 @@ VOID Initialise()
 
 				switch (PLDR_Halo3xex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
 				{
-				case 0x48C1FB10: // Halo 3 Retail latest TU 
+				case 0x48C1FB10: // Halo 3 Retail TU2
 				{
 					Sunrise_Dbg("Halo 3 Retail detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Retail_LSP_Addr);
+					SetupLSPHook(Halo3_Retail_TU2_LSP_Addr);
 					if (bAllowRetailPlayers)
 						AllowRetailPlayers_HALO3_RETAIL();
 
@@ -107,7 +112,7 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
-				case 0x46CA8883: // Halo 3 Epsilon Aug 20th
+				case 0x46CA8883: // Halo 3 Epsilon Aug 20th 2007
 				{
 					Sunrise_Dbg("Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...");
 					SetupNetDllHooks();
@@ -122,6 +127,24 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
 				}
+				case 0x4637C172: // Halo 3 Beta May 1st 2007
+				{
+					Sunrise_Dbg("[Sunrise2] Halo 3 Beta (May 1st) detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Beta_May1_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				case 0x4649437B: // Halo 3 Beta May 15th 2007
+				{
+					Sunrise_Dbg("[Sunrise2] Halo 3 Beta (May 15th) detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Beta_May15_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
 				case 0x455E2AC3: // Halo 3 Pimps at sea (Alpha)
 				{
 					Sunrise_Dbg("Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...");
@@ -131,9 +154,40 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
 				}
+				case 0x45F10275: // Halo 3 Delta cache_test
+				{
+					Sunrise_Dbg("[Sunrise2] Halo 3 Delta (cache_test, Mar 9th) detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Delta_Mar9_cache_test_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
 				default:
 				{
 					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					break;
+				}
+
+				}
+			}
+			else if (TitleID == Halo3ODST)
+			{
+				PLDR_DATA_TABLE_ENTRY PLDR_Halo3ODSTxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
+				switch (PLDR_Halo3ODSTxex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
+				{
+				case 0x49F68EC3: // Halo 3 ODST
+				{
+					Sunrise_Dbg("[Sunrise2] Halo 3 ODST detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_ODST_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				default:
+				{
+					Sunrise_Dbg("[Sunrise2] Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X\n", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 
