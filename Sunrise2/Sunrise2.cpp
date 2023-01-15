@@ -24,11 +24,11 @@ BOOL bLoopHasComplete = FALSE;
 BOOL bIsDevkit; // Set on plugin load. Skips doing xnotify on devkits
 DWORD LastTitleId;
 
-DWORD Halo3 = 0x4D5307E6;
-DWORD Halo3ExternalBeta = 0x4D53880C;
-DWORD HaloReach = 0x4D53085B;
 DWORD Halo3InternalBeta = 0x4D53883A;
+DWORD Halo3ExternalBeta = 0x4D53880C;
+DWORD Halo3 = 0x4D5307E6;
 DWORD Halo3ODST = 0x4D530877;
+DWORD HaloReach = 0x4D53085B;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
@@ -40,6 +40,7 @@ DWORD Halo3_Beta_May15_LSP_Addr = 0x820DE738;
 DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
 DWORD Halo3_Retail_TU2_LSP_Addr = 0x823B8EF0;
 DWORD Halo3_ODST_LSP_Addr = 0x821D22A0;
+DWORD HaloReach_LSP_Addr = 0x822712B0;
 
 DWORD Halo3_Retail_XUserReadStats_Addr = 0x825B6358;
 DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
@@ -198,6 +199,15 @@ VOID Initialise()
 				PLDR_DATA_TABLE_ENTRY PLDR_HaloReachxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				switch (PLDR_HaloReachxex->TimeDateStamp)
 				{
+				case 0x4C4AAE66:
+				{
+					Sunrise_Dbg("[Sunrise2] Halo: Reach detected! Initialising hooks...\n");
+					SetupNetDllHooks();
+					SetupLSPHook(HaloReach_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
 				default:
 				{
 					Sunrise_Dbg("Unsupported Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
