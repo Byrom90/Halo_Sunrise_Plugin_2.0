@@ -12,7 +12,7 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.02;
+FLOAT SunriseVers = 2.03;
 
 CHAR ip[4] = { 174, 136, 231, 17 };
 INT port = 8000;
@@ -129,7 +129,7 @@ VOID Initialise()
 				}
 				case 0x4637C172: // Halo 3 Beta May 1st 2007
 				{
-					Sunrise_Dbg("[Sunrise2] Halo 3 Beta (May 1st) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Beta (May 1st) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Beta_May1_LSP_Addr);
 
@@ -138,7 +138,7 @@ VOID Initialise()
 				}
 				case 0x4649437B: // Halo 3 Beta May 15th 2007
 				{
-					Sunrise_Dbg("[Sunrise2] Halo 3 Beta (May 15th) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Beta (May 15th) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Beta_May15_LSP_Addr);
 
@@ -156,7 +156,7 @@ VOID Initialise()
 				}
 				case 0x45F10275: // Halo 3 Delta cache_test
 				{
-					Sunrise_Dbg("[Sunrise2] Halo 3 Delta (cache_test, Mar 9th) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Delta (cache_test, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Delta_Mar9_cache_test_LSP_Addr);
 
@@ -165,7 +165,7 @@ VOID Initialise()
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 
@@ -178,7 +178,7 @@ VOID Initialise()
 				{
 				case 0x49F68EC3: // Halo 3 ODST
 				{
-					Sunrise_Dbg("[Sunrise2] Halo 3 ODST detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 ODST detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_ODST_LSP_Addr);
 
@@ -187,7 +187,7 @@ VOID Initialise()
 				}
 				default:
 				{
-					Sunrise_Dbg("[Sunrise2] Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X\n", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 
