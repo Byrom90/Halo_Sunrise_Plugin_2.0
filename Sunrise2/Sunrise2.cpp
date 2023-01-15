@@ -82,7 +82,7 @@ VOID Initialise()
 		{
 			LastTitleId = TitleID; // Set the last title id  to the current title id so we don't loop rechecking
 
-			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta || TitleID == Halo3ODST) // Check for both regular and alpha/beta title ids
+			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				//XexPcToFileHeader((PVOID)0x82000000, &PLDR_Halo3xex);
@@ -154,6 +154,19 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
+				default:
+				{
+					printf("[Sunrise2] Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					break;
+				}
+
+				}
+			}
+			else if (TitleID == Halo3ODST)
+			{
+				PLDR_DATA_TABLE_ENTRY PLDR_Halo3ODSTxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
+				switch (PLDR_Halo3ODSTxex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
+				{
 				case 0x49F68EC3: // Halo 3 ODST
 				{
 					printf("[Sunrise2] Halo 3 ODST detected! Initialising hooks...\n");
@@ -165,7 +178,7 @@ VOID Initialise()
 				}
 				default:
 				{
-					printf("[Sunrise2] Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					printf("[Sunrise2] Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X\n", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 
