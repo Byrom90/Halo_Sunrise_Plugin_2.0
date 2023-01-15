@@ -12,7 +12,7 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.03;
+FLOAT SunriseVers = 2.04;
 
 CHAR ip[4] = { 174, 136, 231, 17 };
 INT port = 8000;
@@ -167,7 +167,7 @@ VOID Initialise()
 				}
 				case 0x45F1026C: // Halo 3 Delta cache_release
 				{
-					Sunrise_Dbg("[Sunrise2] Halo 3 Delta (cache_release, Mar 9th) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Delta_Mar9_cache_release_LSP_Addr);
 
@@ -211,7 +211,7 @@ VOID Initialise()
 				{
 				case 0x4C4AAE66:
 				{
-					Sunrise_Dbg("[Sunrise2] Halo: Reach detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo: Reach detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(HaloReach_LSP_Addr);
 
