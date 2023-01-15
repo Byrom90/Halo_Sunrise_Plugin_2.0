@@ -702,6 +702,7 @@
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SimpleIni.h" />
     <ClInclude Include="Sunrise2.h" />
     <ClInclude Include="CoreHooks.h" />
     <ClInclude Include="stdafx.h" />

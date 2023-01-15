@@ -14,5 +14,6 @@
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Sunrise2.h" />
     <ClInclude Include="CoreHooks.h" />
+    <ClInclude Include="SimpleIni.h" />
   </ItemGroup>
 </Project>

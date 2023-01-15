@@ -12,7 +12,7 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.00;
+FLOAT SunriseVers = 2.02;
 
 CHAR ip[4] = { 174, 136, 231, 17 };
 INT port = 8000;
@@ -31,7 +31,7 @@ DWORD Halo3InternalBeta = 0x4D53883A;
 DWORD Halo3ODST = 0x4D530877;
 
 BOOL bAllowRetailPlayers = TRUE;
-BOOL bIgnoreTrueskill = TRUE;
+BOOL bIgnoreTrueskill = FALSE;
 
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
 DWORD Halo3_Delta_Mar9_cache_test_LSP_Addr = 0x82343270;
@@ -47,6 +47,7 @@ DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
 
 VOID AllowRetailPlayers_HALO3_RETAIL()
 {
+	Sunrise_Dbg("Allowing Retail players");
 	// allow MM to start with offline peers
 	*((DWORD*)(0x822BA37C)) = 0x60000000;
 	// disable host migration before map/game variants are downloaded.
@@ -73,6 +74,12 @@ VOID Initialise()
 {
 	hXam = GetModuleHandle(MODULE_XAM);
 
+	if (MountPath(MOUNT_POINT, GetMountPath()) != 0)
+	{
+		Sunrise_Dbg("Failed to set mount point!");
+		return;
+	}
+	
 	while (bRunContinuous)
 	{
 
@@ -84,6 +91,8 @@ VOID Initialise()
 
 			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				//XexPcToFileHeader((PVOID)0x82000000, &PLDR_Halo3xex);
 
@@ -91,7 +100,7 @@ VOID Initialise()
 				{
 				case 0x48C1FB10: // Halo 3 Retail TU2
 				{
-					printf("[Sunrise2] Halo 3 Retail detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Retail detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Retail_TU2_LSP_Addr);
 					if (bAllowRetailPlayers)
@@ -105,7 +114,7 @@ VOID Initialise()
 				}
 				case 0x46CA8883: // Halo 3 Epsilon Aug 20th 2007
 				{
-					printf("[Sunrise2] Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Epsilon_LSP_Addr);
 
@@ -115,7 +124,7 @@ VOID Initialise()
 					// Enable debug logs.
 					*((DWORD*)(0x82236154)) = 0x60000000;
 
-					XNotify(L"Halo Sunrise Intialised!");
+					XNotify(L"Halo Sunrise Initialised!");
 					break;
 				}
 				case 0x4637C172: // Halo 3 Beta May 1st 2007
@@ -138,11 +147,11 @@ VOID Initialise()
 				}
 				case 0x455E2AC3: // Halo 3 Pimps at sea (Alpha)
 				{
-					printf("[Sunrise2] Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...\n");
+					Sunrise_Dbg("Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Pimps_LSP_Addr);
 					
-					XNotify(L"Halo Sunrise Intialised!");
+					XNotify(L"Halo Sunrise Initialised!");
 					break;
 				}
 				case 0x45F10275: // Halo 3 Delta cache_test
@@ -156,7 +165,7 @@ VOID Initialise()
 				}
 				default:
 				{
-					printf("[Sunrise2] Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X\n", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 
@@ -191,7 +200,7 @@ VOID Initialise()
 				{
 				default:
 				{
-					printf("[Sunrise2] Unsupported Halo Reach xex! TimeDateStamp: 0x%X\n", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unsupported Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					break;
 				}
 				}
@@ -210,15 +219,15 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 	case DLL_PROCESS_ATTACH:
 		if (IsTrayOpen())
 		{
-			printf("[Sunrise2] Plugin load aborted! Disc tray is open\n");
+			Sunrise_Dbg("Plugin load aborted! Disc tray is open");
 			HANDLE hSunrise = hModule;
-			bLoopHasComplete = TRUE; // Make sure we set this so we don't get stuff in a sleep loop when we unload (DLL_PROCESS_DETACH) in a sec.
+			bLoopHasComplete = TRUE; // Make sure we set this so we don't get stuck in a sleep loop when we unload (DLL_PROCESS_DETACH) in a sec.
 			*(WORD*)((DWORD)hSunrise + 64) = 1;
 			return FALSE;
 		}
 		
 		bIsDevkit = *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE; // Simple devkit check
-		printf("[Sunrise2] v%.02f loaded! Running on %s kernel\n", SunriseVers, bIsDevkit ? "Devkit" : "Retail");
+		Sunrise_Dbg("v%.02f loaded! Running on %s kernel", SunriseVers, bIsDevkit ? "Devkit" : "Retail");
 		ThreadMe((LPTHREAD_START_ROUTINE)Initialise);
 		
 		break;
@@ -232,7 +241,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 			Sleep(100);
 
 		Sleep(500);
-		printf("[Sunrise2] Unloaded!\n", SunriseVers);
+		Sunrise_Dbg("Unloaded!");
 		break;
 
 	}
