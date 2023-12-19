@@ -36,6 +36,7 @@ BOOL bIgnoreTrueskill = FALSE;
 DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
 DWORD Halo3_Delta_Mar9_cache_test_LSP_Addr = 0x82343270;
 DWORD Halo3_Delta_Mar9_cache_release_LSP_Addr = 0x82446F90;
+DWORD Halo3_Delta_Mar7_cache_release_LSP_Addr = 0x82466A28;
 DWORD Halo3_Beta_May1_LSP_Addr = 0x820DE740;
 DWORD Halo3_Beta_May15_LSP_Addr = 0x820DE738;
 DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
@@ -170,6 +171,15 @@ VOID Initialise()
 					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
 					SetupLSPHook(Halo3_Delta_Mar9_cache_release_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				case 0x45EF61A8: // Halo 3 Delta cache_release
+				{
+					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 7th) detected! Initialising hooks...");
+					SetupNetDllHooks();
+					SetupLSPHook(Halo3_Delta_Mar7_cache_release_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
