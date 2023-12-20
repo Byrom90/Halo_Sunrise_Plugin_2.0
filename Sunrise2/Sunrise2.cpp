@@ -152,7 +152,7 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Pimps_LSP_Addr);
+					SetupPreBetaLSPHook(Halo3_Pimps_LSP_Addr);
 					
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
@@ -161,7 +161,7 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_test, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Delta_Mar9_cache_test_LSP_Addr);
+					SetupPreBetaLSPHook(Halo3_Delta_Mar9_cache_test_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -170,7 +170,7 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Delta_Mar9_cache_release_LSP_Addr);
+					SetupPreBetaLSPHook(Halo3_Delta_Mar9_cache_release_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -179,7 +179,7 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 7th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Delta_Mar7_cache_release_LSP_Addr);
+					SetupPreBetaLSPHook(Halo3_Delta_Mar7_cache_release_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
