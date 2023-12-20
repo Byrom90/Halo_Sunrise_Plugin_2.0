@@ -65,7 +65,7 @@ int __fastcall lsp_server_hook(char* lsp_manager, int service_type, DWORD* out_c
 
 VOID SetupPreBetaLSPHook(DWORD Address)
 {
-	PatchInJump((DWORD*)Address, (DWORD)&lsp_server_hook, false);
+	PatchInJump((DWORD*)Address, (DWORD)&pre_beta_lsp_server_hook, false);
 }
 
 VOID SetupLSPHook(DWORD Address)
