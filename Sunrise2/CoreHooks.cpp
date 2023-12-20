@@ -41,6 +41,17 @@ VOID SetupNetDllHooks()
 }
 
 
+int __fastcall pre_beta_lsp_server_hook(char* lsp_manager, int service_type, int service_id, DWORD* out_connection_token, DWORD* lsp_ip_address, unsigned __int16* lsp_port, char* Source)
+{
+	int result; // r3
+
+	*lsp_ip_address = (int)ip;
+	*lsp_port = port;
+	*out_connection_token = 1;
+	result = 1;
+	return result;
+}
+
 int __fastcall lsp_server_hook(char* lsp_manager, int service_type, DWORD* out_connection_token, DWORD* lsp_ip_address, unsigned __int16* lsp_port, char* Source)
 {
 	int result; // r3
@@ -50,6 +61,11 @@ int __fastcall lsp_server_hook(char* lsp_manager, int service_type, DWORD* out_c
 	*out_connection_token = 1;
 	result = 1;
 	return result;
+}
+
+VOID SetupPreBetaLSPHook(DWORD Address)
+{
+	PatchInJump((DWORD*)Address, (DWORD)&lsp_server_hook, false);
 }
 
 VOID SetupLSPHook(DWORD Address)
