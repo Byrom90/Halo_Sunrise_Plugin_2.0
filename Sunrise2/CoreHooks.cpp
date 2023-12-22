@@ -2,6 +2,9 @@
 #include "Sunrise2.h"
 #include "Utilities.h"
 
+XTITLE_SERVER_INFO activeServer;
+WORD activeServerPort;
+
 int NetDll_socketHook(XNCALLER_TYPE n, int af, int type, int protocol)
 {
 	int s = NetDll_socket(n, af, type, protocol);
@@ -16,11 +19,8 @@ int NetDll_socketHook(XNCALLER_TYPE n, int af, int type, int protocol)
 int NetDll_connectHook(XNCALLER_TYPE n, SOCKET s, const sockaddr* name, int namelen)
 {
 	if (n == 1) {
-		((SOCKADDR_IN*)name)->sin_addr.S_un.S_un_b.s_b1 = ip[0];
-		((SOCKADDR_IN*)name)->sin_addr.S_un.S_un_b.s_b2 = ip[1];
-		((SOCKADDR_IN*)name)->sin_addr.S_un.S_un_b.s_b3 = ip[2];
-		((SOCKADDR_IN*)name)->sin_addr.S_un.S_un_b.s_b4 = ip[3];
-		((SOCKADDR_IN*)name)->sin_port = port;
+		((SOCKADDR_IN*)name)->sin_addr.S_un.S_addr = activeServer.inaServer.S_un.S_addr;
+		((SOCKADDR_IN*)name)->sin_port = activeServerPort;
 	}
 
 	return NetDll_connect(n, s, name, namelen);;
@@ -33,11 +33,7 @@ int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 }
 
 int NetDll_XNetServerToInAddrHook(XNCALLER_TYPE n, IN_ADDR address_in, DWORD title_id, IN_ADDR* address_out) {
-	if (n == 1 
-		&& address_in.S_un.S_un_b.s_b1 == ip[0]
-		&& address_in.S_un.S_un_b.s_b2 == ip[1]
-		&& address_in.S_un.S_un_b.s_b3 == ip[2]
-		&& address_in.S_un.S_un_b.s_b4 == ip[3]
+	if (n == 1 && address_in.S_un.S_addr == activeServer.inaServer.S_un.S_addr
 	) {
 		// Skip the actual bollocks, assume sockpatch is enabled and just copy the IP.
 		// If the game manually checks for a secure 0. address, this will die.
@@ -45,6 +41,8 @@ int NetDll_XNetServerToInAddrHook(XNCALLER_TYPE n, IN_ADDR address_in, DWORD tit
 		address_out->S_un.S_addr = address_in.S_un.S_addr;
 		return 0;
 	}
+
+	return NetDll_XNetServerToInAddr(n, address_in, title_id, address_out);
 }
 
 HANDLE lsp_enum_handle;
@@ -80,17 +78,17 @@ halo_log_event sunrise_event = {
 // Idk wtf im doing
 typedef LONG
 (WINAPI* p_halo_log_func)(
-	__in    halo_log_event*                       thisEvent,
-	__in    char*                       message,
+	__in    halo_log_event*    thisEvent,
+	__in    char*              message,
 	...
 	); 
 
 p_halo_log_func halo_logger;
 
-#define write_to_halo_logs(f_, ...)                                                                            \
-{                                                                                                 \
-    if (halo_logger) {                                                                            \
-    	halo_logger(&sunrise_event, (f_), ##__VA_ARGS__);                                                                     \
+#define write_to_halo_logs(f_, ...)                                 \
+{                                                                   \
+    if (halo_logger) {                                              \
+    	halo_logger(&sunrise_event, (f_), ##__VA_ARGS__);           \
     }                                                               \
 };
 
@@ -98,7 +96,11 @@ void RegisterHaloLogger(DWORD address) {
 	halo_logger = (p_halo_log_func)address;
 }
 
-XTITLE_SERVER_INFO serverInfo;
+void RegisterActiveServer(in_addr address, WORD port, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
+	activeServer.inaServer.S_un.S_addr = address.S_un.S_addr;
+	activeServerPort = port;
+	memcpy(activeServer.szServerInfo, description, XTITLE_SERVER_MAX_SERVER_INFO_LEN);
+}
 
 int XamEnumerateHook(
 	HANDLE hEnum,
@@ -143,10 +145,10 @@ int XamEnumerateHook(
 			pOverlapped->hEvent
 		);
 
-		write_to_halo_logs("networking:sunrise: Copying LSP info from %d to buffer %d", &serverInfo, pvBuffer);
-		write_to_halo_logs("networking:sunrise: Our server info has IP %d description %s", serverInfo.inaServer.S_un.S_addr, serverInfo.szServerInfo);
+		write_to_halo_logs("networking:sunrise: Copying LSP info from %d to buffer %d", &activeServer, pvBuffer);
+		write_to_halo_logs("networking:sunrise: Our server info has IP %d description %s", activeServer.inaServer.S_un.S_addr, activeServer.szServerInfo);
 
-		memcpy(pvBuffer, &serverInfo, sizeof(XTITLE_SERVER_INFO));
+		memcpy(pvBuffer, &activeServer, sizeof(XTITLE_SERVER_INFO));
 
 
 		if (pOverlapped->hEvent) {
@@ -171,16 +173,6 @@ int XamEnumerateHook(
 	return XamEnumerate(hEnum, dwFlags, pvBuffer, cbBuffer, pcItemsReturned, pOverlapped);
 }
 
-char server_description[] = "required,mass_storage,other,ttl,usr,shr,web,dbg,upl,prs,std";
-
-void initialize_lsp_server_info() {
-	serverInfo.inaServer.S_un.S_un_b.s_b1 = ip[0];
-	serverInfo.inaServer.S_un.S_un_b.s_b2 = ip[1];
-	serverInfo.inaServer.S_un.S_un_b.s_b3 = ip[2];
-	serverInfo.inaServer.S_un.S_un_b.s_b4 = ip[3];
-	memcpy(serverInfo.szServerInfo, server_description, sizeof(server_description));
-}
-
 VOID SetupNetDllHooks()
 {
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 12, (DWORD)NetDll_connectHook); // connect
@@ -188,7 +180,6 @@ VOID SetupNetDllHooks()
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 51, (DWORD)NetDll_XNetStartupHook);
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 58, (DWORD)NetDll_XNetServerToInAddrHook);
 
-	initialize_lsp_server_info();
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 590, (DWORD)XamCreateEnumeratorHandleHook);
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 592, (DWORD)XamEnumerateHook);
 

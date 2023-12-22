@@ -14,8 +14,9 @@
 
 FLOAT SunriseVers = 2.05;
 
-CHAR ip[4] = { 174, 136, 231, 17 };
-INT port = 8000;
+in_addr sunrise_ip = { 174, 136, 231, 17 };
+INT sunrise_port = 8000;
+const char sunrise_description[XTITLE_SERVER_MAX_SERVER_INFO_LEN] = "required,mass_storage,other,ttl,usr,shr,web,dbg,upl,prs,std";
 
 
 HANDLE hXam;
@@ -83,6 +84,8 @@ VOID Initialise()
 
 			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
@@ -193,6 +196,10 @@ VOID Initialise()
 			}
 			else if (TitleID == Halo3ODST)
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3ODSTxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				switch (PLDR_Halo3ODSTxex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
 				{
@@ -217,6 +224,10 @@ VOID Initialise()
 			}
 			else if (TitleID == HaloReach) // Future Reach support
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
 				PLDR_DATA_TABLE_ENTRY PLDR_HaloReachxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				switch (PLDR_HaloReachxex->TimeDateStamp)
 				{
