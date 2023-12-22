@@ -182,8 +182,10 @@ VOID Initialise()
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo 3 xex! TimeDateStamp: 0x%X", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 
@@ -204,8 +206,10 @@ VOID Initialise()
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo 3 ODST xex! TimeDateStamp: 0x%X", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 
@@ -255,8 +259,10 @@ VOID Initialise()
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
 					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 				}
