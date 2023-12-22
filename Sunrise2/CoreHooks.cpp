@@ -32,9 +32,18 @@ int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 	return NetDll_XNetStartup(xnc, xnsp);
 }
 
+int NetDll_XNetUnregisterInAddrHook(IN_ADDR address) {
+	if (address.S_un.S_addr == activeServer.inaServer.S_un.S_addr
+	) {
+		return 0;
+	}
+
+	return XNetUnregisterInAddr(address);
+}
+
 int NetDll_XNetServerToInAddrHook(XNCALLER_TYPE n, IN_ADDR address_in, DWORD title_id, IN_ADDR* address_out) {
 	if (n == 1 && address_in.S_un.S_addr == activeServer.inaServer.S_un.S_addr
-	) {
+		) {
 		// Skip the actual bollocks, assume sockpatch is enabled and just copy the IP.
 		// If the game manually checks for a secure 0. address, this will die.
 		// We'll solve that if it happens.
@@ -115,59 +124,64 @@ int XamEnumerateHook(
 		hEnum == lsp_enum_handle
 	) {
 		write_to_halo_logs("networking:sunrise: XamEnumerateHook(%d, %d, %d, %d, %d, %d)", hEnum, dwFlags, pvBuffer, cbBuffer, pcItemsReturned, pOverlapped);
-
 		write_to_halo_logs("networking:sunrise: XamEnumerateHook with handle %d", hEnum);
 		write_to_halo_logs("networking:sunrise: This is enumeration %d", enumeration_index);
 
-		write_to_halo_logs("networking:sunrise: overlapped with low = %d, high = %d, context = %d, error = %d, event = %d",
-			pOverlapped->InternalLow,
-			pOverlapped->InternalHigh,
-			pOverlapped->InternalContext,
-			pOverlapped->dwExtendedError,
-			pOverlapped->hEvent
-		);
-
 		if (cbBuffer < sizeof(XTITLE_SERVER_INFO)) {
 			write_to_halo_logs("networking:sunrise: XamEnumerateHook The buffer is too small! %d < %d", cbBuffer, sizeof(XTITLE_SERVER_INFO));
+			return ERROR_INSUFFICIENT_BUFFER;
 		}
-
-		int errorCode = enumeration_index == 0 ? 0 : ERROR_NO_MORE_FILES;
-		pOverlapped->InternalLow = errorCode;
-		pOverlapped->InternalHigh = 1;
-		pOverlapped->InternalContext = (ULONG_PTR)GetCurrentThread();
-		pOverlapped->dwExtendedError = 0;
-
-		write_to_halo_logs("networking:sunrise: Set overlapped to low = %d, high = %d, context = %d, error = %d, event = %d",
-			pOverlapped->InternalLow,
-			pOverlapped->InternalHigh,
-			pOverlapped->InternalContext,
-			pOverlapped->dwExtendedError,
-			pOverlapped->hEvent
-		);
 
 		write_to_halo_logs("networking:sunrise: Copying LSP info from %d to buffer %d", &activeServer, pvBuffer);
 		write_to_halo_logs("networking:sunrise: Our server info has IP %d description %s", activeServer.inaServer.S_un.S_addr, activeServer.szServerInfo);
-
 		memcpy(pvBuffer, &activeServer, sizeof(XTITLE_SERVER_INFO));
 
-
-		if (pOverlapped->hEvent) {
-			write_to_halo_logs("networking:sunrise Resetting event...");
-
-			ResetEvent(pOverlapped->hEvent);
-		}
+		int errorCode = enumeration_index == 0 ? 0 : ERROR_NO_MORE_FILES;
 
 		enumeration_index = 1;
 
-		if (pOverlapped->hEvent) {
-			write_to_halo_logs("networking:sunrise Setting event...");
+		if (pOverlapped) {
+			write_to_halo_logs("networking:sunrise: overlapped with low = %d, high = %d, context = %d, error = %d, event = %d",
+				pOverlapped->InternalLow,
+				pOverlapped->InternalHigh,
+				pOverlapped->InternalContext,
+				pOverlapped->dwExtendedError,
+				pOverlapped->hEvent
+			);
 
-			SetEvent(pOverlapped->hEvent);
+			pOverlapped->InternalLow = errorCode;
+			pOverlapped->InternalHigh = 1;
+			pOverlapped->InternalContext = (ULONG_PTR)GetCurrentThread();
+			pOverlapped->dwExtendedError = 0;
+
+			write_to_halo_logs("networking:sunrise: Set overlapped to low = %d, high = %d, context = %d, error = %d, event = %d",
+				pOverlapped->InternalLow,
+				pOverlapped->InternalHigh,
+				pOverlapped->InternalContext,
+				pOverlapped->dwExtendedError,
+				pOverlapped->hEvent
+			);
+
+
+			if (pOverlapped->hEvent) {
+				write_to_halo_logs("networking:sunrise Resetting event...");
+
+				ResetEvent(pOverlapped->hEvent);
+			}
+
+
+			if (pOverlapped->hEvent) {
+				write_to_halo_logs("networking:sunrise Setting event...");
+
+				SetEvent(pOverlapped->hEvent);
+			}
+
+			write_to_halo_logs("networking:sunrise XamEnumerateHook finished. Hold onto your helmets.");
+
+			return ERROR_IO_PENDING;
 		}
 
-		write_to_halo_logs("networking:sunrise XamEnumerateHook finished. Hold onto your helmets.");
-
-		return ERROR_IO_PENDING;
+		return errorCode;
 	}
 
 	return XamEnumerate(hEnum, dwFlags, pvBuffer, cbBuffer, pcItemsReturned, pOverlapped);
@@ -179,6 +193,7 @@ VOID SetupNetDllHooks()
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 3, (DWORD)NetDll_socketHook); // socket
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 51, (DWORD)NetDll_XNetStartupHook);
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 58, (DWORD)NetDll_XNetServerToInAddrHook);
+	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 63, (DWORD)NetDll_XNetUnregisterInAddrHook);
 
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 590, (DWORD)XamCreateEnumeratorHandleHook);
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 592, (DWORD)XamEnumerateHook);
