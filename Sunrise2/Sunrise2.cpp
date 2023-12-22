@@ -12,10 +12,11 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.04;
+FLOAT SunriseVers = 2.05;
 
-CHAR ip[4] = { 174, 136, 231, 17 };
-INT port = 8000;
+in_addr sunrise_ip = { 174, 136, 231, 17 };
+INT sunrise_port = 8000;
+const char sunrise_description[XTITLE_SERVER_MAX_SERVER_INFO_LEN] = "required,mass_storage,other,ttl,usr,shr,web,dbg,upl,prs,std";
 
 
 HANDLE hXam;
@@ -32,17 +33,6 @@ DWORD HaloReach = 0x4D53085B;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
-
-DWORD Halo3_Pimps_LSP_Addr = 0x821A7768;
-DWORD Halo3_Delta_Mar9_cache_test_LSP_Addr = 0x82343270;
-DWORD Halo3_Delta_Mar9_cache_release_LSP_Addr = 0x82446F90;
-DWORD Halo3_Delta_Mar7_cache_release_LSP_Addr = 0x82466A28;
-DWORD Halo3_Beta_May1_LSP_Addr = 0x820DE740;
-DWORD Halo3_Beta_May15_LSP_Addr = 0x820DE738;
-DWORD Halo3_Epsilon_LSP_Addr = 0x8248E820;
-DWORD Halo3_Retail_TU2_LSP_Addr = 0x823B8EF0;
-DWORD Halo3_ODST_LSP_Addr = 0x821D22A0;
-DWORD HaloReach_LSP_Addr = 0x822712B0;
 
 DWORD Halo3_Retail_XUserReadStats_Addr = 0x825B6358;
 DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
@@ -94,6 +84,8 @@ VOID Initialise()
 
 			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
@@ -105,7 +97,7 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Retail detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Retail_TU2_LSP_Addr);
+
 					if (bAllowRetailPlayers)
 						AllowRetailPlayers_HALO3_RETAIL();
 
@@ -119,13 +111,15 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Epsilon (Aug 20th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Epsilon_LSP_Addr);
 
 					if (bIgnoreTrueskill)
 						SetupXUserReadStatsHook(Halo3_Epsilon_XUserReadStats_Addr);
 
 					// Enable debug logs.
 					*((DWORD*)(0x82236154)) = 0x60000000;
+
+					// Add Sunrise to the debug logs.
+					RegisterHaloLogger(0x82237920);
 
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
@@ -134,7 +128,6 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Beta (May 1st) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Beta_May1_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -143,7 +136,6 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Beta (May 15th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_Beta_May15_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -152,7 +144,17 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupPreBetaLSPHook(Halo3_Pimps_LSP_Addr);
+
+					// Enable debug logs.
+					*((DWORD*)(0x823b23d0)) = 0x60000000;
+					// Move them from cache:\\ to d:\\ 
+					const char* reports_path = "d:\\reports\\";
+					memcpy(((char*)(0x820B934C)), reports_path, strlen(reports_path));
+					// null terminate
+					*((char*)(0x820B934C + strlen(reports_path))) = 0;
+
+					// Add Sunrise to the debug logs.
+					RegisterHaloLogger(0x823B2CE8);
 					
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
@@ -161,7 +163,6 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_test, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupPreBetaLSPHook(Halo3_Delta_Mar9_cache_test_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -170,7 +171,6 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 9th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupPreBetaLSPHook(Halo3_Delta_Mar9_cache_release_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -179,14 +179,16 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 Delta (cache_release, Mar 7th) detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupPreBetaLSPHook(Halo3_Delta_Mar7_cache_release_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo 3 xex! TimeDateStamp: 0x%X", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo 3 xex! TimeDateStamp: 0x%X", PLDR_Halo3xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 
@@ -194,6 +196,10 @@ VOID Initialise()
 			}
 			else if (TitleID == Halo3ODST)
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3ODSTxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				switch (PLDR_Halo3ODSTxex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
 				{
@@ -201,14 +207,16 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo 3 ODST detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(Halo3_ODST_LSP_Addr);
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo 3 ODST xex! TimeDateStamp: 0x%X", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo 3 ODST xex! TimeDateStamp: 0x%X", PLDR_Halo3ODSTxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 
@@ -216,6 +224,10 @@ VOID Initialise()
 			}
 			else if (TitleID == HaloReach) // Future Reach support
 			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
 				PLDR_DATA_TABLE_ENTRY PLDR_HaloReachxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
 				switch (PLDR_HaloReachxex->TimeDateStamp)
 				{
@@ -223,14 +235,45 @@ VOID Initialise()
 				{
 					Sunrise_Dbg("Halo: Reach detected! Initialising hooks...");
 					SetupNetDllHooks();
-					SetupLSPHook(HaloReach_LSP_Addr);
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+				case 0x4CC5E691:
+				{
+					Sunrise_Dbg("Halo: Reach detected! Initialising hooks...");
+					SetupNetDllHooks();
+
+					// Load retail maps.
+					*((DWORD*)(0x823C0244)) = 0x60000000;
+					*((DWORD*)(0x823C01E4)) = 0x60000000;
+					// Havok Patch
+					*((DWORD*)(0x8305C000)) = 0x60000000;
+					*((DWORD*)(0x8305C010)) = 0x60000000;
+					// Don't Crash on Assertion
+					*((DWORD*)(0x82473884)) = 0x60000000;
+					*((WORD*)(0x82473890)) = 0x4800;
+					// Enable Debug Logs
+					*((DWORD*)(0x82C4A704)) = 0x60000000;
+					// SKip network manifest checks
+					*((WORD*)(0x82531FC8)) = 0x4800;
+					*((WORD*)(0x826A6CE8)) = 0x4800;
+					// Ignroe Banhammer Load
+					*((DWORD*)(0x825CEEAC)) = 0x60000000;
+					*((DWORD*)(0x825CED38)) = 0x60000000;
+					*((DWORD*)(0x825CED08)) = 0x60000000;
+					// Hide Precache Message
+					*((BYTE*)(0x825F56F8)) = 1;
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 				default:
 				{
-					Sunrise_Dbg("Unsupported Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					Sunrise_Dbg("Unrecognized Halo Reach xex! TimeDateStamp: 0x%X", PLDR_HaloReachxex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
 				}
