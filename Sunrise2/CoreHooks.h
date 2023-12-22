@@ -5,8 +5,7 @@
 #include "stdafx.h"
 
 VOID SetupNetDllHooks();
-VOID SetupLSPHook(DWORD Address);
-VOID SetupPreBetaLSPHook(DWORD Address);
+VOID RegisterHaloLogger(DWORD Address);
 VOID SetupXUserReadStatsHook(DWORD Address);
 
 #endif

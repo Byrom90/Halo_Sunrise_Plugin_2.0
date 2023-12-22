@@ -32,45 +32,166 @@ int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 	return NetDll_XNetStartup(xnc, xnsp);
 }
 
+int NetDll_XNetServerToInAddrHook(XNCALLER_TYPE n, IN_ADDR address_in, DWORD title_id, IN_ADDR* address_out) {
+	if (n == 1 
+		&& address_in.S_un.S_un_b.s_b1 == ip[0]
+		&& address_in.S_un.S_un_b.s_b2 == ip[1]
+		&& address_in.S_un.S_un_b.s_b3 == ip[2]
+		&& address_in.S_un.S_un_b.s_b4 == ip[3]
+	) {
+		// Skip the actual bollocks, assume sockpatch is enabled and just copy the IP.
+		// If the game manually checks for a secure 0. address, this will die.
+		// We'll solve that if it happens.
+		address_out->S_un.S_addr = address_in.S_un.S_addr;
+		return 0;
+	}
+}
+
+HANDLE lsp_enum_handle;
+int enumeration_index;
+
+int XamCreateEnumeratorHandleHook(DWORD user_index, HXAMAPP app_id, DWORD open_message, DWORD close_message, DWORD extra_size, DWORD item_count, DWORD flags, PHANDLE out_handle)
+{
+	int result = XamCreateEnumeratorHandle(user_index, app_id, open_message, close_message, extra_size, item_count, flags, out_handle);
+
+	if (open_message == 0x58039) {
+		lsp_enum_handle = *out_handle;
+		enumeration_index = 0;
+	}
+
+	return result;
+
+}
+
+
+struct halo_log_event
+{
+	int level;
+	long category;
+	int flags;
+};
+
+halo_log_event sunrise_event = {
+	// It's not important, but the category here is wrong. I don't know what it should be.
+	4, 1, 0
+};
+
+
+// Idk wtf im doing
+typedef LONG
+(WINAPI* p_halo_log_func)(
+	__in    halo_log_event*                       thisEvent,
+	__in    char*                       message,
+	...
+	); 
+
+p_halo_log_func halo_logger;
+
+#define write_to_halo_logs(f_, ...)                                                                            \
+{                                                                                                 \
+    if (halo_logger) {                                                                            \
+    	halo_logger(&sunrise_event, (f_), ##__VA_ARGS__);                                                                     \
+    }                                                               \
+};
+
+void RegisterHaloLogger(DWORD address) {
+	halo_logger = (p_halo_log_func)address;
+}
+
+XTITLE_SERVER_INFO serverInfo;
+
+int XamEnumerateHook(
+	HANDLE hEnum,
+	DWORD dwFlags,
+	PDWORD pvBuffer,
+	DWORD cbBuffer,
+	PDWORD pcItemsReturned,
+	PXOVERLAPPED pOverlapped
+)
+{
+	if (
+		hEnum == lsp_enum_handle
+	) {
+		write_to_halo_logs("networking:sunrise: XamEnumerateHook(%d, %d, %d, %d, %d, %d)", hEnum, dwFlags, pvBuffer, cbBuffer, pcItemsReturned, pOverlapped);
+
+		write_to_halo_logs("networking:sunrise: XamEnumerateHook with handle %d", hEnum);
+		write_to_halo_logs("networking:sunrise: This is enumeration %d", enumeration_index);
+
+		write_to_halo_logs("networking:sunrise: overlapped with low = %d, high = %d, context = %d, error = %d, event = %d",
+			pOverlapped->InternalLow,
+			pOverlapped->InternalHigh,
+			pOverlapped->InternalContext,
+			pOverlapped->dwExtendedError,
+			pOverlapped->hEvent
+		);
+
+		if (cbBuffer < sizeof(XTITLE_SERVER_INFO)) {
+			write_to_halo_logs("networking:sunrise: XamEnumerateHook The buffer is too small! %d < %d", cbBuffer, sizeof(XTITLE_SERVER_INFO));
+		}
+
+		int errorCode = enumeration_index == 0 ? 0 : ERROR_NO_MORE_FILES;
+		pOverlapped->InternalLow = errorCode;
+		pOverlapped->InternalHigh = 1;
+		pOverlapped->InternalContext = (ULONG_PTR)GetCurrentThread();
+		pOverlapped->dwExtendedError = 0;
+
+		write_to_halo_logs("networking:sunrise: Set overlapped to low = %d, high = %d, context = %d, error = %d, event = %d",
+			pOverlapped->InternalLow,
+			pOverlapped->InternalHigh,
+			pOverlapped->InternalContext,
+			pOverlapped->dwExtendedError,
+			pOverlapped->hEvent
+		);
+
+		write_to_halo_logs("networking:sunrise: Copying LSP info from %d to buffer %d", &serverInfo, pvBuffer);
+		write_to_halo_logs("networking:sunrise: Our server info has IP %d description %s", serverInfo.inaServer.S_un.S_addr, serverInfo.szServerInfo);
+
+		memcpy(pvBuffer, &serverInfo, sizeof(XTITLE_SERVER_INFO));
+
+
+		if (pOverlapped->hEvent) {
+			write_to_halo_logs("networking:sunrise Resetting event...");
+
+			ResetEvent(pOverlapped->hEvent);
+		}
+
+		enumeration_index = 1;
+
+		if (pOverlapped->hEvent) {
+			write_to_halo_logs("networking:sunrise Setting event...");
+
+			SetEvent(pOverlapped->hEvent);
+		}
+
+		write_to_halo_logs("networking:sunrise XamEnumerateHook finished. Hold onto your helmets.");
+
+		return ERROR_IO_PENDING;
+	}
+
+	return XamEnumerate(hEnum, dwFlags, pvBuffer, cbBuffer, pcItemsReturned, pOverlapped);
+}
+
+char server_description[] = "required,mass_storage,other,ttl,usr,shr,web,dbg,upl,prs,std";
+
+void initialize_lsp_server_info() {
+	serverInfo.inaServer.S_un.S_un_b.s_b1 = ip[0];
+	serverInfo.inaServer.S_un.S_un_b.s_b2 = ip[1];
+	serverInfo.inaServer.S_un.S_un_b.s_b3 = ip[2];
+	serverInfo.inaServer.S_un.S_un_b.s_b4 = ip[3];
+	memcpy(serverInfo.szServerInfo, server_description, sizeof(server_description));
+}
 
 VOID SetupNetDllHooks()
 {
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 12, (DWORD)NetDll_connectHook); // connect
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 3, (DWORD)NetDll_socketHook); // socket
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 51, (DWORD)NetDll_XNetStartupHook);
-}
+	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 58, (DWORD)NetDll_XNetServerToInAddrHook);
 
+	initialize_lsp_server_info();
+	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 590, (DWORD)XamCreateEnumeratorHandleHook);
+	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 592, (DWORD)XamEnumerateHook);
 
-int __fastcall pre_beta_lsp_server_hook(char* lsp_manager, int service_type, int service_id, DWORD* out_connection_token, DWORD* lsp_ip_address, unsigned __int16* lsp_port, char* Source)
-{
-	int result; // r3
-
-	*lsp_ip_address = (int)ip;
-	*lsp_port = port;
-	*out_connection_token = 1;
-	result = 1;
-	return result;
-}
-
-int __fastcall lsp_server_hook(char* lsp_manager, int service_type, DWORD* out_connection_token, DWORD* lsp_ip_address, unsigned __int16* lsp_port, char* Source)
-{
-	int result; // r3
-
-	*lsp_ip_address = (int)ip;
-	*lsp_port = port;
-	*out_connection_token = 1;
-	result = 1;
-	return result;
-}
-
-VOID SetupPreBetaLSPHook(DWORD Address)
-{
-	PatchInJump((DWORD*)Address, (DWORD)&pre_beta_lsp_server_hook, false);
-}
-
-VOID SetupLSPHook(DWORD Address)
-{
-	PatchInJump((DWORD*)Address, (DWORD)&lsp_server_hook, false);
 }
 
 DWORD __stdcall XUserReadStats_hook(DWORD, DWORD, DWORD, DWORD, DWORD, DWORD* pcbResults, DWORD* pResults, void*)
