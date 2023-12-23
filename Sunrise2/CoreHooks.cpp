@@ -32,13 +32,13 @@ int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 	return NetDll_XNetStartup(xnc, xnsp);
 }
 
-int NetDll_XNetUnregisterInAddrHook(IN_ADDR address) {
+int NetDll_XNetUnregisterInAddrHook(XNCALLER_TYPE xnc, IN_ADDR address) {
 	if (address.S_un.S_addr == activeServer.inaServer.S_un.S_addr
 	) {
 		return 0;
 	}
 
-	return XNetUnregisterInAddr(address);
+	return NetDll_XNetUnregisterInAddr(xnc, address);
 }
 
 int NetDll_XNetServerToInAddrHook(XNCALLER_TYPE n, IN_ADDR address_in, DWORD title_id, IN_ADDR* address_out) {
