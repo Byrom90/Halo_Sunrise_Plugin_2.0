@@ -145,6 +145,11 @@ VOID Initialise()
 					Sunrise_Dbg("Halo 3 Pimps at sea (Alpha) detected! Initialising hooks...");
 					SetupNetDllHooks();
 
+					// Fix a bug where high rank players can't enter matchmaking.
+					*((DWORD*)(0x82457578)) = 0x3960000C;
+					// Fix another stats bug.
+					*((WORD*)(0x82454BAC)) = 0x4800;
+
 					// Enable debug logs.
 					*((DWORD*)(0x823b23d0)) = 0x60000000;
 					// Move them from cache:\\ to d:\\ 
