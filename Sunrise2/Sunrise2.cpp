@@ -149,6 +149,8 @@ VOID Initialise()
 					*((DWORD*)(0x82457578)) = 0x3960000C;
 					// Fix another stats bug.
 					*((WORD*)(0x82454BAC)) = 0x4800;
+					// Force the game to save settings even if a newer file is present.
+					*((WORD*)(0x82970B30)) = 0x4800;
 
 					// Enable debug logs.
 					*((DWORD*)(0x823b23d0)) = 0x60000000;
