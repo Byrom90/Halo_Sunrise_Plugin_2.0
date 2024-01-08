@@ -12,7 +12,7 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-FLOAT SunriseVers = 2.05;
+const char* SunriseVers = "2.1.0";
 
 in_addr sunrise_ip = { 174, 136, 231, 17 };
 INT sunrise_port = 8000;
@@ -54,13 +54,29 @@ VOID AllowRetailPlayers_HALO3_RETAIL()
 	*((DWORD*)(0x824004D8)) = 0x60000000;
 
 	// Allow MM to start with peers who don't have exp loaded
-	// Doesn't work fully yet.
 	*((DWORD*)(0x823F8B04)) = 0x60000000;
-
 	*((DWORD*)(0x822BB77C)) = 0x60000000;
 	*((DWORD*)(0x822BB788)) = 0x60000000;
 	*((DWORD*)(0x822BB794)) = 0x60000000;
 	*((DWORD*)(0x822BB7A0)) = 0x60000000;
+}
+
+VOID AllowRetailPlayers_HALOREACH_RETAIL()
+{
+	Sunrise_Dbg("Allowing Retail players");
+	// allow MM to start with offline players
+	*((DWORD*)(0x82290744)) = 0x60000000;
+	*((DWORD*)(0x82290750)) = 0x60000000;
+
+	// disable host migration before map/game variants are downloaded.
+	*((DWORD*)(0x82287B20)) = 0x60000000;
+	*((DWORD*)(0x82287B24)) = 0x60000000;
+	*((DWORD*)(0x82287B28)) = 0x60000000;
+	*((DWORD*)(0x82287B2C)) = 0x60000000;
+	*((DWORD*)(0x82287B30)) = 0x60000000;
+	*((DWORD*)(0x82287B38)) = 0x60000000;
+	*((DWORD*)(0x82287B40)) = 0x60000000;
+	*((DWORD*)(0x82287B60)) = 0x60000000;
 }
 
 VOID Initialise()
@@ -72,13 +88,13 @@ VOID Initialise()
 		Sunrise_Dbg("Failed to set mount point!");
 		return;
 	}
-	
+
 	while (bRunContinuous)
 	{
 
 		DWORD TitleID = XamGetCurrentTitleId();
 
-		if (TitleID != LastTitleId) 
+		if (TitleID != LastTitleId)
 		{
 			LastTitleId = TitleID; // Set the last title id  to the current title id so we don't loop rechecking
 
@@ -156,13 +172,11 @@ VOID Initialise()
 					*((DWORD*)(0x823b23d0)) = 0x60000000;
 					// Move them from cache:\\ to d:\\ 
 					const char* reports_path = "d:\\reports\\";
-					memcpy(((char*)(0x820B934C)), reports_path, strlen(reports_path));
-					// null terminate
-					*((char*)(0x820B934C + strlen(reports_path))) = 0;
+					memcpy(((char*)(0x820B934C)), reports_path, strlen(reports_path) + 1);
 
 					// Add Sunrise to the debug logs.
 					RegisterHaloLogger(0x823B2CE8);
-					
+
 					XNotify(L"Halo Sunrise Initialised!");
 					break;
 				}
@@ -246,6 +260,18 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
+				case 0x4E559FF8: //reach tu
+				{
+					Sunrise_Dbg("Halo: Reach TU detected! Initialising hooks...");
+					SetupNetDllHooks();
+
+					if (bAllowRetailPlayers) {
+						AllowRetailPlayers_HALOREACH_RETAIL();
+					}
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
 				case 0x4CC5E691:
 				{
 					Sunrise_Dbg("Halo: Reach detected! Initialising hooks...");
@@ -257,20 +283,6 @@ VOID Initialise()
 					// Havok Patch
 					*((DWORD*)(0x8305C000)) = 0x60000000;
 					*((DWORD*)(0x8305C010)) = 0x60000000;
-					// Don't Crash on Assertion
-					*((DWORD*)(0x82473884)) = 0x60000000;
-					*((WORD*)(0x82473890)) = 0x4800;
-					// Enable Debug Logs
-					*((DWORD*)(0x82C4A704)) = 0x60000000;
-					// SKip network manifest checks
-					*((WORD*)(0x82531FC8)) = 0x4800;
-					*((WORD*)(0x826A6CE8)) = 0x4800;
-					// Ignroe Banhammer Load
-					*((DWORD*)(0x825CEEAC)) = 0x60000000;
-					*((DWORD*)(0x825CED38)) = 0x60000000;
-					*((DWORD*)(0x825CED08)) = 0x60000000;
-					// Hide Precache Message
-					*((BYTE*)(0x825F56F8)) = 1;
 
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
@@ -305,11 +317,11 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ul_reason_for_call, LPVOID lpReserve
 			*(WORD*)((DWORD)hSunrise + 64) = 1;
 			return FALSE;
 		}
-		
+
 		bIsDevkit = *(DWORD*)0x8E038610 & 0x8000 ? FALSE : TRUE; // Simple devkit check
-		Sunrise_Dbg("v%.02f loaded! Running on %s kernel", SunriseVers, bIsDevkit ? "Devkit" : "Retail");
+		Sunrise_Dbg("v%s loaded! Running on %s kernel", SunriseVers, bIsDevkit ? "Devkit" : "Retail");
 		ThreadMe((LPTHREAD_START_ROUTINE)Initialise);
-		
+
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
