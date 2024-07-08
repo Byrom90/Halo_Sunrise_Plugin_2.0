@@ -30,6 +30,7 @@ DWORD Halo3ExternalBeta = 0x4D53880C;
 DWORD Halo3 = 0x4D5307E6;
 DWORD Halo3ODST = 0x4D530877;
 DWORD HaloReach = 0x4D53085B;
+DWORD Halo4 = 0x4D530919;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
@@ -243,7 +244,7 @@ VOID Initialise()
 
 				}
 			}
-			else if (TitleID == HaloReach) // Future Reach support
+			else if (TitleID == HaloReach)
 			{
 				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
 
@@ -295,6 +296,26 @@ VOID Initialise()
 					XNotify(L"Halo Sunrise Intialised!");
 					break;
 				}
+				}
+			}
+			else if (TitleID == Halo4) // Future Halo 4 support
+			{
+				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+
+				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
+
+				PLDR_DATA_TABLE_ENTRY PLDR_Halo4xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
+				switch (PLDR_Halo4xex->TimeDateStamp) // Detects the exact xex by timestamp. Prevents patching static addresses in the wrong xex.
+				{
+				default:
+				{
+					Sunrise_Dbg("Unrecognized Halo 4 xex! TimeDateStamp: 0x%X", PLDR_Halo4xex->TimeDateStamp); // Print the timestamp so we can support this xex later if required.
+					SetupNetDllHooks();
+
+					XNotify(L"Halo Sunrise Intialised!");
+					break;
+				}
+
 				}
 			}
 		}
