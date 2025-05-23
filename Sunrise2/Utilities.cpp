@@ -224,7 +224,7 @@ VOID Writeini(BOOL GenerateNew)
 		if (!ini_Sunrise_W.LoadFile(PATH_INI)) {
 			ini_Sunrise_W.SetBoolValue("OPTIONS", "IgnoreTrueskill", bIgnoreTrueskill);
 			ini_Sunrise_W.SetBoolValue("OPTIONS", "AllowRetailPlayers", bAllowRetailPlayers);
-			ini_Sunrise_W.SetValue("OPTIONS", "BlamnetDomain", BlamnetDomain)
+			ini_Sunrise_W.SetValue("OPTIONS", "BlamnetDomain", BlamnetDomain);
 		}
 	}
 

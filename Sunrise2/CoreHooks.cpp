@@ -94,6 +94,11 @@ void RegisterHaloLogger(DWORD address) {
 	halo_logger = (p_halo_log_func)address;
 }
 
+void RegisterActiveServer(in_addr address, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
+	activeServer.inaServer.S_un.S_addr = address.S_un.S_addr;
+	memcpy(activeServer.szServerInfo, description, XTITLE_SERVER_MAX_SERVER_INFO_LEN);
+}
+
 void RegisterActiveServerDomain(char* domain, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
 	WSAEVENT event;
 	static struct in_addr addr;
@@ -102,10 +107,10 @@ void RegisterActiveServerDomain(char* domain, const char description[XTITLE_SERV
 
 	addr_ptr = (char*)&addr;
 
-	if (!name) goto error;
+	if (!BlamnetDomain) goto error;
 
 	event = WSACreateEvent();
-	XNetDnsLookup(name, event, &dns);
+	XNetDnsLookup(BlamnetDomain, event, &dns);
 	if (!dns) goto error;
 
 	WaitForSingleObject((HANDLE)event, INFINITE);
@@ -117,14 +122,10 @@ void RegisterActiveServerDomain(char* domain, const char description[XTITLE_SERV
 	XNetDnsRelease(dns);
 
 	RegisterActiveServer(addr, description);
+	return;
 
 error:
 	XNotify(L"Failed to register Title Server!");
-}
-
-void RegisterActiveServer(in_addr address, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
-	activeServer.inaServer.S_un.S_addr = address.S_un.S_addr;
-	memcpy(activeServer.szServerInfo, description, XTITLE_SERVER_MAX_SERVER_INFO_LEN);
 }
 
 int XamEnumerateHook(

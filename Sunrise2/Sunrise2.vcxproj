@@ -207,7 +207,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
@@ -262,7 +262,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9d.lib;d3dx9d.lib;xgraphicsd.lib;xapilibd.lib;xaudiod2.lib;x3daudiod.lib;xmcored.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <ModuleDefinitionFile>Sunrise2.def</ModuleDefinitionFile>
@@ -312,7 +312,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9i.lib;d3dx9i.lib;xgraphics.lib;xapilibi.lib;xaudio2.lib;x3daudioi.lib;xmcorei.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9i.lib;d3dx9i.lib;xgraphics.lib;xapilibi.lib;xaudio2.lib;x3daudioi.lib;xmcorei.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>xapilib.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
@@ -418,7 +418,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudio.lib;xmcore.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudio.lib;xmcore.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -472,7 +472,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -531,7 +531,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -591,7 +591,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -650,7 +650,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/ignore:4089 /dll /entry:"_DllMainCRTStartup" /include:"XboxKrnlBuildNumber" %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcmt.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xapilib.lib;xaudio2.lib;x3daudioltcg.lib;xmcoreltcg.lib;xboxkrnl.lib;xbdm.lib;xnet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
