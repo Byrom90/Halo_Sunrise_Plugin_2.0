@@ -12,10 +12,8 @@
 #include "CoreHooks.h"
 #include "Utilities.h"
 
-const char* SunriseVers = "2.1.0";
+const char* SunriseVers = "2.2.0";
 
-in_addr sunrise_ip = { 174, 136, 231, 17 };
-INT sunrise_port = 8000;
 const char sunrise_description[XTITLE_SERVER_MAX_SERVER_INFO_LEN] = "required,mass_storage,other,ttl,usr,shr,web,dbg,upl,prs,std";
 
 
@@ -33,6 +31,7 @@ DWORD HaloReach = 0x4D53085B;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
+char* BlamnetDomain = "xbl.lsp.blam.network";
 
 DWORD Halo3_Retail_XUserReadStats_Addr = 0x825B6358;
 DWORD Halo3_Epsilon_XUserReadStats_Addr = 0x826E77E8;
@@ -100,7 +99,7 @@ VOID Initialise()
 
 			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
-				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
 
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
@@ -217,7 +216,7 @@ VOID Initialise()
 			}
 			else if (TitleID == Halo3ODST)
 			{
-				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
 
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
@@ -245,7 +244,7 @@ VOID Initialise()
 			}
 			else if (TitleID == HaloReach) // Future Reach support
 			{
-				RegisterActiveServer(sunrise_ip, sunrise_port, sunrise_description);
+				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
 
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 

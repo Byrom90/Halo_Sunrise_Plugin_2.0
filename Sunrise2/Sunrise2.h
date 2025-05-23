@@ -7,5 +7,6 @@
 extern BOOL bIsDevkit;
 extern BOOL bAllowRetailPlayers;
 extern BOOL bIgnoreTrueskill;
+extern char* BlamnetDomain;
 
 #endif
