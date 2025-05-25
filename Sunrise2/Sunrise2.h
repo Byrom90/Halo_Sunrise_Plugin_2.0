@@ -9,4 +9,6 @@ extern BOOL bAllowRetailPlayers;
 extern BOOL bIgnoreTrueskill;
 extern char* BlamnetDomain;
 
+VOID RegisterHaloServer();
+
 #endif

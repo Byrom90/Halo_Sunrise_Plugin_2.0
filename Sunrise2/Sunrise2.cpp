@@ -28,6 +28,7 @@ DWORD Halo3ExternalBeta = 0x4D53880C;
 DWORD Halo3 = 0x4D5307E6;
 DWORD Halo3ODST = 0x4D530877;
 DWORD HaloReach = 0x4D53085B;
+DWORD HaloReachBeta = 0x4D53885C;
 
 BOOL bAllowRetailPlayers = TRUE;
 BOOL bIgnoreTrueskill = FALSE;
@@ -99,8 +100,6 @@ VOID Initialise()
 
 			if (TitleID == Halo3 || TitleID == Halo3ExternalBeta || TitleID == Halo3InternalBeta) // Check for both regular and alpha/beta title ids
 			{
-				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
-
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3xex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
@@ -216,8 +215,6 @@ VOID Initialise()
 			}
 			else if (TitleID == Halo3ODST)
 			{
-				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
-
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
 				PLDR_DATA_TABLE_ENTRY PLDR_Halo3ODSTxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
@@ -242,10 +239,8 @@ VOID Initialise()
 
 				}
 			}
-			else if (TitleID == HaloReach) // Future Reach support
+			else if (TitleID == HaloReach)
 			{
-				RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
-
 				Readini(); // Read the ini each time Halo is loaded to avoid having to reload the plugin
 
 				PLDR_DATA_TABLE_ENTRY PLDR_HaloReachxex = (PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle;
@@ -300,6 +295,23 @@ VOID Initialise()
 		Sleep(500); // Add a slight delay to the check loop
 	}
 	bLoopHasComplete = TRUE;
+}
+
+VOID RegisterHaloServer()
+{
+	DWORD TitleID = XamGetCurrentTitleId();
+
+	switch (TitleId) {
+		case Halo3:
+		case Halo3InternalBeta:
+		case Halo3ExternalBeta:
+		case Halo3ODST:
+		case HaloReach:
+		case HaloReachBeta:
+			RegisterActiveServerDomain(BlamnetDomain, sunrise_description);
+		default:
+			break;
+	}
 }
 
 

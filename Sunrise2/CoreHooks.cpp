@@ -17,8 +17,14 @@ int NetDll_socketHook(XNCALLER_TYPE n, int af, int type, int protocol)
 
 int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 {
+	// For devkits or modded boxes with devkit software.
 	xnsp->cfgFlags |= XNET_STARTUP_BYPASS_SECURITY;
-	return NetDll_XNetStartup(xnc, xnsp);
+	int status = NetDll_XNetStartup(xnc, xnsp);
+	if (status == 0) {
+		// Perform DNS lookup for any LSPs we're routing via domain.
+		RegisterHaloServer();
+	}
+	return status;
 }
 
 int NetDll_XNetUnregisterInAddrHook(XNCALLER_TYPE xnc, IN_ADDR address) {
