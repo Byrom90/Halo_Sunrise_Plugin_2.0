@@ -3,7 +3,6 @@
 #include "Utilities.h"
 
 XTITLE_SERVER_INFO activeServer;
-WORD activeServerPort;
 
 int NetDll_socketHook(XNCALLER_TYPE n, int af, int type, int protocol)
 {
@@ -16,20 +15,16 @@ int NetDll_socketHook(XNCALLER_TYPE n, int af, int type, int protocol)
 	return s;
 }
 
-int NetDll_connectHook(XNCALLER_TYPE n, SOCKET s, const sockaddr* name, int namelen)
-{
-	if (n == 1) {
-		((SOCKADDR_IN*)name)->sin_addr.S_un.S_addr = activeServer.inaServer.S_un.S_addr;
-		((SOCKADDR_IN*)name)->sin_port = activeServerPort;
-	}
-
-	return NetDll_connect(n, s, name, namelen);;
-}
-
 int NetDll_XNetStartupHook(XNCALLER_TYPE xnc, XNetStartupParams* xnsp)
 {
+	// For devkits or modded boxes with devkit software.
 	xnsp->cfgFlags |= XNET_STARTUP_BYPASS_SECURITY;
-	return NetDll_XNetStartup(xnc, xnsp);
+	int status = NetDll_XNetStartup(xnc, xnsp);
+	if (status == 0) {
+		// Perform DNS lookup for any LSPs we're routing via domain.
+		RegisterHaloServer();
+	}
+	return status;
 }
 
 int NetDll_XNetUnregisterInAddrHook(XNCALLER_TYPE xnc, IN_ADDR address) {
@@ -105,10 +100,38 @@ void RegisterHaloLogger(DWORD address) {
 	halo_logger = (p_halo_log_func)address;
 }
 
-void RegisterActiveServer(in_addr address, WORD port, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
+void RegisterActiveServer(in_addr address, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
 	activeServer.inaServer.S_un.S_addr = address.S_un.S_addr;
-	activeServerPort = port;
 	memcpy(activeServer.szServerInfo, description, XTITLE_SERVER_MAX_SERVER_INFO_LEN);
+}
+
+void RegisterActiveServerDomain(char* domain, const char description[XTITLE_SERVER_MAX_SERVER_INFO_LEN]) {
+	WSAEVENT event;
+	static struct in_addr addr;
+	static char* addr_ptr = NULL;
+	XNDNS* dns = NULL;
+
+	addr_ptr = (char*)&addr;
+
+	if (!BlamnetDomain) goto error;
+
+	event = WSACreateEvent();
+	XNetDnsLookup(BlamnetDomain, event, &dns);
+	if (!dns) goto error;
+
+	WaitForSingleObject((HANDLE)event, INFINITE);
+	if (dns->iStatus) goto error;
+
+	memcpy(&addr, dns->aina, sizeof(addr));
+
+	WSACloseEvent(event);
+	XNetDnsRelease(dns);
+
+	RegisterActiveServer(addr, description);
+	return;
+
+error:
+	XNotify(L"Failed to register Title Server!");
 }
 
 int XamEnumerateHook(
@@ -189,7 +212,6 @@ int XamEnumerateHook(
 
 VOID SetupNetDllHooks()
 {
-	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 12, (DWORD)NetDll_connectHook); // connect
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 3, (DWORD)NetDll_socketHook); // socket
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 51, (DWORD)NetDll_XNetStartupHook);
 	PatchModuleImport((PLDR_DATA_TABLE_ENTRY)*XexExecutableModuleHandle, "xam.xex", 58, (DWORD)NetDll_XNetServerToInAddrHook);
