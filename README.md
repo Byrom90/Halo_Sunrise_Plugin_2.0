@@ -1,3 +1,13 @@
+<div align="center">
+  <a href="https://github.com/Blam-Network/sunrise_plugin">
+    <img src="https://github.com/Blam-Network.png" alt="BNETLogo" width="160" height="160">
+  </a>
+
+  <h1 align="center">The Sunrise Plugin has a new home!</h1>
+  <h2 align="center">https://github.com/Blam-Network/sunrise_plugin</h2>
+  <br />
+</div>
+
 # Halo Sunrise Plugin 2.0
 
 A Dashlaunch plugin designed to re-enable matchmaking on Xbox 360 Halo 3 by redirecting to custom servers. Based on the work of craftycodie found here: https://github.com/craftycodie/Sunrise-Plugin
